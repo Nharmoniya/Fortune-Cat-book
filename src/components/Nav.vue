@@ -23,25 +23,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+a{
+  text-decoration: none;
+}
 nav {
   display: flex;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   flex-direction: row;
   font-size: 12px;
   > .item {
+    //border-left: 1px solid gray;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
     padding: 2px 0;
     width: 33.33333%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color:#909399;
     .icon {
       width: 32px;
       height: 32px;
     }
   }
   > .item.selected{
-    color: red;
+    color: #409EFF;
   }
 }
 </style>
