@@ -4,12 +4,17 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import Nav from '@/components/Nav.vue';
+import Layout from '@/components/Layout.vue';
+
 
 
 Vue.config.productionTip = false;
 
 //全局导入VueRouter
 Vue.component('Nav', Nav);
+
+//引入全局layout
+Vue.component('Layout',Layout);
 
 new Vue({
   router,
