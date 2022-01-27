@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'Tags'
 };
@@ -35,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-@import "~@/assets/style/reset.scss";
+
 //第一部分
 .tag {
   font-size: 14px;
@@ -44,34 +44,35 @@ export default {
   display: flex;
   flex-direction: column-reverse;
 
-> .current {
-  display: flex;
-  flex-wrap: wrap;
+  > .current {
+    display: flex;
+    flex-wrap: wrap;
 
-> li {
-  background: #d9d9d9;
-  $h: 24px;
-  height: $h;
-  line-height: $h;
-  border-radius: $h/2;
-  padding: 0 16px;
-  margin-right: 12px;
-  margin-top: 4px;
+    > li {
+      background: #d9d9d9;
+      $h:24px;
+      height: $h;
+      line-height: $h;
+      border-radius: $h/2;
+      padding: 0 16px;
+      margin-right: 12px;
+      margin-top: 4px;
 
-}
-}
+    }
+  }
 
-> .new {
-  padding-top: 16px;
-  margin-bottom: 6px;
-button {
-  background: transparent;
-  border: none;
-  color: #999;
-  border-bottom: 1px solid;
-  padding: 0 4px;
-}
-}
+  > .new {
+    padding-top: 16px;
+    margin-bottom: 6px;
+
+    button {
+      background: transparent;
+      border: none;
+      color: #999;
+      border-bottom: 1px solid;
+      padding: 0 4px;
+    }
+  }
 }
 
 </style>
