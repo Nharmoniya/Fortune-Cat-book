@@ -3,15 +3,22 @@
   <div class="notes">
     <label class="notes-label">
       <span class="name"><strong>备注:</strong></span>
-      <input type="text" placeholder="在这里添加备注">
+      <input type="text" :value="value" @input="onInput" placeholder="在这里添加备注">
     </label>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Notes'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+@Component
+export default class Notes extends Vue {
+  value='';//声明一个数据value
+  onInput(event:KeyboardEvent){//声明一个方法
+    const input = event.target as HTMLInputElement;
+    this.value = input.value;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
