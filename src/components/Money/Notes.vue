@@ -30,6 +30,7 @@ export default {
   }
 
   input {
+    width: 250px;
     height: 64px;
     flex-grow: 1;
     background: transparent;

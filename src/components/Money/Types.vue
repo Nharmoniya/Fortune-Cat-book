@@ -13,11 +13,17 @@
 </template>
 
 <script lang="ts">
+//TS的优点：
+//1.自动提示更智能
+//2.你不能随便写 .tostring()
+//3.编译报错，无法变成JS更严谨
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+
 @Component
 export default class Types extends Vue {
   type = '-'; // '-'表示支出，'+'表示收入
+
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
@@ -26,7 +32,6 @@ export default class Types extends Vue {
   }
 }
 </script>
-
 
 
 <style lang="scss" scoped>
