@@ -35,7 +35,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-
 //第一部分
 .tag {
   font-size: 14px;
@@ -43,11 +42,9 @@ export default {
   flex-grow: 1;
   display: flex;
   flex-direction: column-reverse;
-
   > .current {
     display: flex;
     flex-wrap: wrap;
-
     > li {
       background: #d9d9d9;
       $h:24px;
@@ -57,14 +54,11 @@ export default {
       padding: 0 16px;
       margin-right: 12px;
       margin-top: 4px;
-
     }
   }
-
   > .new {
     padding-top: 16px;
     margin-bottom: 6px;
-
     button {
       background: transparent;
       border: none;
@@ -74,5 +68,4 @@ export default {
     }
   }
 }
-
 </style>

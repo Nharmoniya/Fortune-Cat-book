@@ -14,7 +14,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class Notes extends Vue {
   x='';//声明一个数据value
-
 }
 </script>
 
