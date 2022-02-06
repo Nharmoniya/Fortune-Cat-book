@@ -14,7 +14,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button class="ok">OK</button>
+      <button @click="ok" class="ok">OK</button>
       <button class="zero" @click="inputContent">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -58,7 +58,8 @@ export default class NumberPad extends Vue {
   }
 
   ok(){
-
+    this.$emit('update:value',this.output);
+    this.output='0';
   }
 }
 </script>
@@ -86,7 +87,12 @@ export default class NumberPad extends Vue {
       float: left;
       background: transparent;
       border: none;
-
+      //👇点击后的阴影效果
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      text-decoration: none;
+      overflow: hidden;
+      cursor: pointer;
       &.ok {
         height: 64*2px;
         float: right;
@@ -128,6 +134,12 @@ export default class NumberPad extends Vue {
 
       &:nth-child(12) {
         background: darken($bg, 4*6%);
+      }
+
+    }
+    @media (min-width:500px){
+      button:hover{
+        background: #409EFF;
       }
     }
   }

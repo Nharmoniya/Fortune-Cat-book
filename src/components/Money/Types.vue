@@ -18,7 +18,7 @@
 //2.你不能随便写 .tostring()
 //3.编译报错，无法变成JS更严谨
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Types extends Vue {
@@ -29,6 +29,12 @@ export default class Types extends Vue {
       throw new Error('type is unknown');
     }
     this.type = type;
+
+  }
+  //声明一个watch监听type，当他改变时触发一个OnTypeChanged事件然后发送
+  @Watch('type')
+  OnTypeChanged(value:string){
+    this.$emit('update:value',value);
   }
 }
 </script>

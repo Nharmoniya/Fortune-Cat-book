@@ -3,17 +3,25 @@
   <div class="notes">
     <label class="notes-label">
       <span class="name"><strong>备注:</strong></span>
-      <input type="text" v-model="x" placeholder="在这里添加备注">
+      <input type="text"
+             v-model="value"
+             placeholder="在这里添加备注">
     </label>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
+
 @Component
 export default class Notes extends Vue {
-  x='';//声明一个数据value
+  value = '';//声明一个数据value
+//使用watch监听value的变化，当value变化了就触发一个OnValueChanged方法，然后发送一个指令update：value
+  @Watch('value')
+  OnValueChanged(value: string) {
+    this.$emit('update:value', value);
+  }
 }
 </script>
 
