@@ -1,9 +1,9 @@
 <template>
 
   <Layout classPrefix="layout">
-    {{record}}
-    <NumberPad @update:value="OnUpdateAmount"/>
-    <Types @update:value="OnUpdateTypes"/>
+    {{ recordlist }}
+    <NumberPad @update:value="OnUpdateAmount" @submit="saveRecord"/>
+    <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
     <Notes @update:value="OnUpdateNotes"/>
     <!--    声明一个updatexxx事件让notes里面的值传出去-->
@@ -18,15 +18,21 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
+import {model} from '@/model';
 
-//声明一个类型，里面记录tags，notes，type，amount的类型;注意string[]是字符串数组的意思
-type Record = {
+//由于我们已经把recordlist存入了localstorage中，所以需要把他指向localstorage中，然后可能为空所以还要||'[]'
+const recordlist= model.fetch();
+
+type RecordItem = {
   tags: string[],
   notes: string,
   type: string,
-  amount: number
+  amount: number,
+  createdAt?: Date  // 类 / 构造函数
 }
+
+
 
 
 @Component({
@@ -35,7 +41,8 @@ type Record = {
 export default class Money extends Vue {
   //将列表存储在tags数组中
   tags = ['服饰', '食物', '居住', '出行', '网费', '彩票'];
-  record: Record = {tags: [], notes: '', type: '', amount: 0};
+  recordlist: RecordItem[] = recordlist;
+  record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
   //声明一个方法，接受zzz（为string的字符串）
   OnUpdateTags(value: string[]) {
@@ -43,16 +50,26 @@ export default class Money extends Vue {
   }
 
   OnUpdateNotes(value: string) {
-    this.record.notes=value;
+    this.record.notes = value;
   }
 
-  OnUpdateTypes(value: string) {
-    this.record.type=value;
-  }
 
   OnUpdateAmount(value: string) {
     //parseFloat可以把字符串转换成float的number类型
-    this.record.amount=parseFloat(value);
+    this.record.amount = parseFloat(value);
+  }
+
+  saveRecord() {
+    // 声明一个deepclone
+    const deepClone: RecordItem = model.clone(this.record)
+    deepClone.createdAt=new Date();
+    //把深拷贝的数据push进入recordlist
+    this.recordlist.push(deepClone);
+  }
+
+  @Watch('recordlist')
+  OnRecordListChange() {
+    model.save(this.recordlist);
   }
 }
 </script>

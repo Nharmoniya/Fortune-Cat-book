@@ -2,10 +2,10 @@
   <!--支出收入-->
   <div>
     <ul class="types">
-      <li :class="type === '-' && 'selected'"
+      <li :class="value === '-' && 'selected'"
           @click="selectType('-')">支出
       </li>
-      <li :class="type === '+' && 'selected'"
+      <li :class="value === '+' && 'selected'"
           @click="selectType('+')">收入
       </li>
     </ul>
@@ -22,19 +22,14 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Types extends Vue {
-  type = '-'; // '-'表示支出，'+'表示收入
-
+  //prop一个外部数据type
+  @Prop() readonly value!:string;
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
-    this.type = type;
-
-  }
-  //声明一个watch监听type，当他改变时触发一个OnTypeChanged事件然后发送
-  @Watch('type')
-  OnTypeChanged(value:string){
-    this.$emit('update:value',value);
+    //emit一个事件update:value
+    this.$emit('update:value',type)
   }
 }
 </script>
