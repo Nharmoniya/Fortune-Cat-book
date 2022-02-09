@@ -1,7 +1,7 @@
 <template>
 
   <Layout classPrefix="layout">
-    {{ recordlist }}
+<!--    {{ recordlist }}-->
     <NumberPad @update:value="OnUpdateAmount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
@@ -19,10 +19,12 @@ import Types from '@/components/Money/Types.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
-import {model} from '@/model';
+import {recordlistmodel} from '@/models/recordlistmodel';
+import {taglistmodel} from '@/models/taglistmodel';
 
 //由于我们已经把recordlist存入了localstorage中，所以需要把他指向localstorage中，然后可能为空所以还要||'[]'
-const recordlist= model.fetch();
+const recordlist= recordlistmodel.fetch();
+const tagList = taglistmodel.fetch();
 
 type RecordItem = {
   tags: string[],
@@ -40,7 +42,7 @@ type RecordItem = {
 })
 export default class Money extends Vue {
   //将列表存储在tags数组中
-  tags = ['服饰', '食物', '居住', '出行', '网费', '彩票'];
+  tags = tagList;
   recordlist: RecordItem[] = recordlist;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 
@@ -61,7 +63,7 @@ export default class Money extends Vue {
 
   saveRecord() {
     // 声明一个deepclone
-    const deepClone: RecordItem = model.clone(this.record)
+    const deepClone: RecordItem = recordlistmodel.clone(this.record)
     deepClone.createdAt=new Date();
     //把深拷贝的数据push进入recordlist
     this.recordlist.push(deepClone);
@@ -69,7 +71,7 @@ export default class Money extends Vue {
 
   @Watch('recordlist')
   OnRecordListChange() {
-    model.save(this.recordlist);
+    recordlistmodel.save(this.recordlist);
   }
 }
 </script>

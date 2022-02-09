@@ -17,6 +17,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import {taglistmodel} from '@/models/taglistmodel';
+taglistmodel.fetch();
 @Component
 export default class Tags extends Vue {
   //prop接受一个外部数据，dataSource，字符串类型或者undefined
@@ -38,12 +40,13 @@ export default class Tags extends Vue {
     const name = window.prompt('请输入标签名');
     if(name===''){
       window.alert('标签名不能为空')
+    }else if(name===null){
+      return
     }
     else if(this.dataSource){
       //emit通知money进行更改，'update：dataSource'为函数名，[..this.dataSource,name],就是把前面展开，把name放在dataSource后面
       this.$emit('update:dataSource',[...this.dataSource,name]);
     }
-
   }
 
   // create() {
@@ -94,12 +97,13 @@ export default class Tags extends Vue {
   > .new {
     padding-top: 16px;
     button {
-      font-size: 18px;
-      background: transparent;
+      background: #409EFF;
+      color: white;
+      border-radius: 4px;
       border: none;
-      color: #409EFF;
-      border-bottom: 1px solid;
-      padding: 0 4px;
+      height: 30px;
+      padding: 0 16px;
+      cursor: pointer;
     }
   }
 
