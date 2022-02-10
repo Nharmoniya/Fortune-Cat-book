@@ -5,18 +5,21 @@
       <span class="name"><strong>备注:</strong></span>
       <input type="text"
              v-model="value"
-             placeholder="在这里添加备注">
+             :placeholder="this.placeholder">
     </label>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop,Watch} from 'vue-property-decorator';
 
 @Component
 export default class Notes extends Vue {
   value = '';//声明一个数据value
+
+  @Prop({required:true})fieldName!:string;
+  @Prop({default:''})placeholder!:string;
 //使用watch监听value的变化，当value变化了就触发一个OnValueChanged方法，然后发送一个指令update：value
   @Watch('value')
   OnValueChanged(value: string) {

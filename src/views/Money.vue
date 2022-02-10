@@ -5,7 +5,9 @@
     <NumberPad @update:value="OnUpdateAmount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
-    <Notes @update:value="OnUpdateNotes"/>
+    <Notes field-name="备注"
+           placeholder="在这里输入备注"
+           @update:value="OnUpdateNotes"/>
     <!--    声明一个updatexxx事件让notes里面的值传出去-->
     <!--声明一个data-source存储tag，.sync接受$emit的指令，并把接受传回来的值。-->
     <Tags :data-source.sync="tags" @update:selected="OnUpdateTags"/>
