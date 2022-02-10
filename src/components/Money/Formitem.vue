@@ -15,7 +15,7 @@ import Vue from 'vue';
 import {Component, Prop,Watch} from 'vue-property-decorator';
 
 @Component
-export default class Notes extends Vue {
+export default class Formitem extends Vue {
   value = '';//声明一个数据value
 
   @Prop({required:true})fieldName!:string;
