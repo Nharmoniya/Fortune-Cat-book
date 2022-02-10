@@ -8,6 +8,7 @@ type Taglistmodel = {
   fetch: () => Tag[]
   create: (name: string) => 'success' | 'duplicated' //success 表示成功，duplicated表示name重复
   save: () => void
+  remove:(id:string)=>boolean
 }
 const taglistmodel: Taglistmodel = {
   data: [],
@@ -21,6 +22,18 @@ const taglistmodel: Taglistmodel = {
     this.data.push({id: name, name: name});
     this.save();
     return 'success';
+  },
+  remove(id: string) {
+    let index = -1;
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    this.data.splice(index, 1);
+    this.save();
+    return true;
   },
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));

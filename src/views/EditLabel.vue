@@ -6,7 +6,9 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-    <Formitem field-name="标签名" placeholder="请输入标签名"/>
+    <Formitem :value="tag.name"
+              field-name="标签名"
+              placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
     <Button @click="remove">删除</Button>
@@ -25,19 +27,27 @@ import Button from '@/components/Button.vue';
   components: {Button, Formitem}
 })
 export default class EditLabel extends Vue {
+  tag?:{id:string,name:string}=undefined
   created() {
     const id = this.$route.params.id;
     taglistmodel.fetch();
     const tags = taglistmodel.data;
     const tag = tags.filter(t => t.id === id)[0];
     if (tag) {
-      console.log(tag);
+      this.tag = tag;
     } else {
       this.$router.replace('/404');
     }
   }
   remove(){
 
+    if (this.tag) {
+      if (taglistmodel.remove(this.tag.id)) {
+        this.$router.back();
+      } else {
+        window.alert('删除失败');
+      }
+    }
   }
   goBack(){
     this.$router.back();

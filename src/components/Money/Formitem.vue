@@ -2,8 +2,9 @@
   <!--备注-->
   <div class="notes">
     <label class="notes-label">
-      <span class="name"><strong>备注:</strong></span>
+      <span class="name"><strong>{{this.fieldName}}</strong></span>
       <input type="text"
+             :value="value"
              @input="OnValueChanged($event.target.value)"
              :placeholder="this.placeholder">
     </label>
