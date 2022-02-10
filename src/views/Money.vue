@@ -5,7 +5,7 @@
     <NumberPad @update:value="OnUpdateAmount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
-    <Notes field-name="备注"
+    <Formitem field-name="备注"
            placeholder="在这里输入备注"
            @update:value="OnUpdateNotes"/>
     <!--    声明一个updatexxx事件让notes里面的值传出去-->

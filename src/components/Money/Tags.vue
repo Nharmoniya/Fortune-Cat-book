@@ -5,7 +5,7 @@
     </div>
     <ul class="current">
 <!--v-for循环把tag从datasource中取出；class绑定selected；click绑定一个事件toggle（开关）-->
-      <li v-for="tag in dataSource" :key="tag"
+      <li v-for="tag in dataSource" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">{{tag}}
       </li>

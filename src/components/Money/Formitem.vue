@@ -4,7 +4,7 @@
     <label class="notes-label">
       <span class="name"><strong>备注:</strong></span>
       <input type="text"
-             v-model="value"
+             @input="OnValueChanged($event.target.value)"
              :placeholder="this.placeholder">
     </label>
   </div>
@@ -16,8 +16,7 @@ import {Component, Prop,Watch} from 'vue-property-decorator';
 
 @Component
 export default class Formitem extends Vue {
-  value = '';//声明一个数据value
-
+  @Prop({default:''})readonly value!:string;//声明一个数据value
   @Prop({required:true})fieldName!:string;
   @Prop({default:''})placeholder!:string;
 //使用watch监听value的变化，当value变化了就触发一个OnValueChanged方法，然后发送一个指令update：value
