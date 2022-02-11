@@ -44,7 +44,7 @@ type RecordItem = {
 })
 export default class Money extends Vue {
   //将列表存储在tags数组中
-  tags = tagList;
+  tags = window.tagList;
   recordlist: RecordItem[] = recordlist;
   record: RecordItem = {tags: [], notes: '', type: '-', amount: 0};
 

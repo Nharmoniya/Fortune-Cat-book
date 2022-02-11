@@ -27,7 +27,7 @@ taglistmodel.fetch();
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = taglistmodel.data;
+  tags =window.tagList;
 
   createTag() {
     const name = window.prompt('请输入标签名');
