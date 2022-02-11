@@ -19,10 +19,12 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import {taglistmodel} from '@/models/taglistmodel';
 
+
 @Component
 export default class Tags extends Vue {
   //prop接受一个外部数据，dataSource，字符串类型或者undefined
   @Prop() readonly dataSource: string[] | undefined;
+
   selectedTags: string[] = [];
   //声明一个方法名为toggle（开关），接受tag参数为string
   toggle(tag: string) {
@@ -38,14 +40,13 @@ export default class Tags extends Vue {
   //create方法，新增标签
   create(){
     const name = window.prompt('请输入标签名');
-    if(name===''){
-      window.alert('标签名不能为空')
-    }else if(name===null){
-      return
-    }
-    else if(this.dataSource){
-      //emit通知money进行更改，'update：dataSource'为函数名，[..this.dataSource,name],就是把前面展开，把name放在dataSource后面
-      this.$emit('update:dataSource',[...this.dataSource,name]);
+    if (name) {
+      const message = taglistmodel.create(name);
+      if (message === 'duplicated') {
+        window.alert('标签名重复了');
+      } else if (message === 'success') {
+        window.alert('添加成功');
+      }
     }
   }
 

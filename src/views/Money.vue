@@ -1,7 +1,7 @@
 <template>
 
   <Layout classPrefix="layout">
-    {{ recordlist }}
+<!--    {{ recordlist }}-->
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
@@ -60,7 +60,7 @@ export default class Money extends Vue {
 
   OnUpdateAmount(value: string) {
     //parseFloat可以把字符串转换成float的number类型
-    this.record.amount = parseFloat(value);
+    this.record.amount = value;
   }
 
   saveRecord() {
