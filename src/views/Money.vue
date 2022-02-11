@@ -60,15 +60,11 @@ export default class Money extends Vue {
 
   OnUpdateAmount(value: string) {
     //parseFloat可以把字符串转换成float的number类型
-    this.record.amount = value;
+    this.record.amount = parseFloat(value);
   }
 
   saveRecord() {
-    // 声明一个deepclone
-    const deepClone: RecordItem = recordlistmodel.clone(this.record)
-    deepClone.createdAt=new Date();
-    //把深拷贝的数据push进入recordlist
-    this.recordlist.push(deepClone);
+    recordlistmodel.create(this.record);
   }
 
   @Watch('recordlist')
