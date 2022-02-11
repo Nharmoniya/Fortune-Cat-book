@@ -1,8 +1,8 @@
 <template>
 
   <Layout classPrefix="layout">
-<!--    {{ recordlist }}-->
-    <NumberPad @update:value="OnUpdateAmount" @submit="saveRecord"/>
+    {{ recordlist }}
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
     <Types :value.sync="record.type"/>
     <!--    声明一个updatexxx事件让types里面的值传出去-->
     <Formitem field-name="备注"

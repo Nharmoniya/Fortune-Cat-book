@@ -1,12 +1,13 @@
 <template>
   <layout>
-    <div class="navBar">
-      <Icon class="leftIcon" name="left" @click="goBack"/>
+    <div class="navBar" @click="goBack()">
+      <Icon class="leftIcon" name="left" />
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
     <Formitem :value="tag.name"
+              @update:value="updateTag"
               field-name="标签名"
               placeholder="请输入标签名"/>
     </div>
@@ -39,8 +40,12 @@ export default class EditLabel extends Vue {
       this.$router.replace('/404');
     }
   }
+  updateTag(name:string){
+    if(this.tag){
+      taglistmodel.update(this.tag.id,name);
+    }
+  }
   remove(){
-
     if (this.tag) {
       if (taglistmodel.remove(this.tag.id)) {
         this.$router.back();
@@ -50,6 +55,7 @@ export default class EditLabel extends Vue {
     }
   }
   goBack(){
+    console.log('back')
     this.$router.back();
   }
 }

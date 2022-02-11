@@ -7,7 +7,7 @@
 <!--v-for循环把tag从datasource中取出；class绑定selected；click绑定一个事件toggle（开关）-->
       <li v-for="tag in dataSource" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
-          @click="toggle(tag)">{{tag}}
+          @click="toggle(tag)">{{tag.name}}
       </li>
     </ul>
   </div>
@@ -18,7 +18,7 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import {taglistmodel} from '@/models/taglistmodel';
-taglistmodel.fetch();
+
 @Component
 export default class Tags extends Vue {
   //prop接受一个外部数据，dataSource，字符串类型或者undefined
