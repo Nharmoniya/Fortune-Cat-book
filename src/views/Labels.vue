@@ -18,23 +18,22 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {taglistmodel} from '@/models/taglistmodel';
 import Button from '@/components/Button.vue';
-
-taglistmodel.fetch();
+import {mixins} from 'vue-class-component';
+import TagHelper from '@/mixins/TagHelper';
 
 @Component({
   components: {Button}
 })
-export default class Labels extends Vue {
-  tags =window.tagList; //读tags 去 window读
-
-  createTag() {
-    const name = window.prompt('请输入标签名');
-    if (name) {
-      window.createTag(name);
-    }
+export default class Labels extends mixins(TagHelper) {
+  get tags(){
+    return this.$store.state.tagList;
   }
+
+  beforeCreate(){
+    this.$store.commit('fetchTags');
+  }
+
 }
 </script>
 

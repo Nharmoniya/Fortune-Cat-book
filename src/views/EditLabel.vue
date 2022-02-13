@@ -1,18 +1,18 @@
 <template>
   <layout>
     <div class="navBar" @click="goBack()">
-      <Icon class="leftIcon" name="left" />
+      <Icon class="leftIcon" name="left"/>
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-    <Formitem :value="tag.name"
-              @update:value="updateTag"
-              field-name="标签名"
-              placeholder="请输入标签名"/>
+      <Formitem :value="currentTag.name"
+                @update:value="update"
+                field-name="标签名"
+                placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
-    <Button @click="remove">删除</Button>
+      <Button @click="remove">删除</Button>
     </div>
   </layout>
 </template>
@@ -20,7 +20,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {taglistmodel} from '@/models/taglistmodel';
 import Formitem from '@/components/Money/Formitem.vue';
 import Button from '@/components/Button.vue';
 
@@ -28,34 +27,34 @@ import Button from '@/components/Button.vue';
   components: {Button, Formitem}
 })
 export default class EditLabel extends Vue {
-  tag?:{id:string,name:string}=undefined
+  get currentTag() {
+    return this.$store.state.currentTag;
+  }
+
   created() {
-    const id = this.$route.params.id;
-    taglistmodel.fetch();
-    const tags = taglistmodel.data;
-    const tag = tags.filter(t => t.id === id)[0];
-    if (tag) {
-      this.tag = tag;
-    } else {
+    const id =this.$route.params.id;
+    this.$store.commit('fetchTags');
+    this.$store.commit('setCurrentTag',id);
+    if (!this.currentTag){
       this.$router.replace('/404');
     }
   }
-  updateTag(name:string){
-    if(this.tag){
-      taglistmodel.update(this.tag.id,name);
+  update(name: string) {
+    if (this.currentTag) {
+      this.$store.commit('updateTag', {
+        id: this.currentTag.id, name
+      });
     }
   }
-  remove(){
-    if (this.tag) {
-      if (taglistmodel.remove(this.tag.id)) {
-        this.$router.back();
-      } else {
-        window.alert('删除失败');
-      }
+
+  remove() {
+    if (this.currentTag) {
+      this.$store.commit('removeTag', this.currentTag.id);
     }
   }
-  goBack(){
-    console.log('back')
+
+  goBack() {
+    console.log('back');
     this.$router.back();
   }
 }
@@ -71,21 +70,26 @@ export default class EditLabel extends Vue {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   > .title {
   }
+
   > .leftIcon {
     width: 24px;
     height: 24px;
   }
+
   > .rightIcon {
     width: 24px;
     height: 24px;
   }
 }
+
 .form-wrapper {
   background: white;
   margin-top: 8px;
 }
+
 .button-wrapper {
   text-align: center;
   padding: 16px;

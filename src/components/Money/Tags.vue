@@ -1,11 +1,11 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="create">新增标签</button>
+      <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-<!--v-for循环把tag从datasource中取出；class绑定selected；click绑定一个事件toggle（开关）-->
-      <li v-for="tag in dataSource" :key="tag.id"
+
+      <li v-for="tag in tagList" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">{{tag.name}}
       </li>
@@ -17,16 +17,19 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import {taglistmodel} from '@/models/taglistmodel';
-
+import {mixins} from 'vue-class-component';
+import TagHelper from '@/mixins/TagHelper';
 
 @Component
-export default class Tags extends Vue {
-  //prop接受一个外部数据，dataSource，字符串类型或者undefined
-  @Prop() readonly dataSource: string[] | undefined;
-
+export default class Tags extends mixins(TagHelper) {
   selectedTags: string[] = [];
-  //声明一个方法名为toggle（开关），接受tag参数为string
+
+  get tagList() {
+    return this.$store.state.tagList;
+  }
+  created(){
+    this.$store.commit('fetchTags');
+  }
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
@@ -34,34 +37,8 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
-    //传一个xxx事件，this.selectedTags
-    this.$emit('update:selected',this.selectedTags)
+    this.$emit('update:value', this.selectedTags);
   }
-  //create方法，新增标签
-  create(){
-    const name = window.prompt('请输入标签名');
-    if (name) {
-      const message = taglistmodel.create(name);
-      if (message === 'duplicated') {
-        window.alert('标签名重复了');
-      } else if (message === 'success') {
-        window.alert('添加成功');
-      }
-    }
-  }
-
-  // create() {
-  //   //声明一个变量用来存储弹窗输入的标签名
-  //   const name = window.prompt('请输入标签名');
-  //   //如果名字为空则报错，标签名不能为空
-  //   if (name === '') {
-  //     window.alert('标签名不能为空');
-  //     //否则的话，dataSource传参数，update=name
-  //   } else if (this.dataSource) {
-  //     this.$emit('update:dataSource',
-  //         [...this.dataSource, name]);
-  //   }
-  // }
 }
 </script>
 

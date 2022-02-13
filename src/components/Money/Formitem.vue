@@ -17,11 +17,11 @@ import {Component, Prop,Watch} from 'vue-property-decorator';
 
 @Component
 export default class Formitem extends Vue {
-  @Prop({default:''})readonly value!:string;//声明一个数据value
-  @Prop({required:true})fieldName!:string;
-  @Prop({default:''})placeholder!:string;
+  @Prop({default: ''}) readonly value!: string;
+  @Prop({required: true}) fieldName!: string;
+  @Prop() placeholder?: string;
 
-  OnValueChanged(value: string) {
+  onValueChanged(value: string) {
     this.$emit('update:value', value);
   }
 }

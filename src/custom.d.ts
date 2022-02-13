@@ -7,9 +7,17 @@ type RecordItem = {
   createdAt?: Date  // 类 / 构造函数
 }
 
-interface Window{
-  tagList:Tag[]
-  createTag:(name:string)=>void
+interface Window {
+  store:{
+    tagList: Tag[];
+    createTag: (name: string) => void;
+    removeTag: (id: string) => boolean;
+    findTag: (id: string) => Tag | undefined;
+    updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+    recordlist: RecordItem[];
+    createRecord: (record: RecordItem) => void;
+  }
+
 }
 
 type Tag = {

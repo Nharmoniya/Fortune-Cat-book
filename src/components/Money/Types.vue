@@ -13,10 +13,6 @@
 </template>
 
 <script lang="ts">
-//TS的优点：
-//1.自动提示更智能
-//2.你不能随便写 .tostring()
-//3.编译报错，无法变成JS更严谨
 import Vue from 'vue';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 
