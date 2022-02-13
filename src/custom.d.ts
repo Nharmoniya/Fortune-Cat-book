@@ -1,34 +1,20 @@
-//声明一个类型，里面记录tags，notes，type，amount的类型;注意string[]是字符串数组的意思
 type RecordItem = {
-  tags: string[],
-  notes: string,
-  type: string,
-  amount: number,
+  tags: string[]
+  notes: string
+  type: string
+  amount: number // 数据类型 object | string
   createdAt?: Date  // 类 / 构造函数
-}
-
-interface Window {
-  store:{
-    tagList: Tag[];
-    createTag: (name: string) => void;
-    removeTag: (id: string) => boolean;
-    findTag: (id: string) => Tag | undefined;
-    updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
-    recordlist: RecordItem[];
-    createRecord: (record: RecordItem) => void;
-  }
-
 }
 
 type Tag = {
   id: string;
   name: string;
 }
-type Taglistmodel = {
+type TagListModel = {
   data: Tag[]
   fetch: () => Tag[]
-  create: (name: string) => 'success' | 'duplicated' //success 表示成功，duplicated表示name重复
+  create: (name: string) => 'success' | 'duplicated' // 联合类型
   update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
-  save: () => void
   remove: (id: string) => boolean
+  save: () => void
 }
