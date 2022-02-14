@@ -3,7 +3,9 @@
   <Layout classPrefix="layout">
 <!--        {{ recordList }}-->
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-    <Types :value.sync="record.type"/>
+    <Tabs :data-source="recordtypelist"
+          :value.sync="record.type"/>
+
     <div class="notes">
       <Formitem field-name="备注"
                 placeholder="在这里输入备注"
@@ -17,17 +19,21 @@
 <script lang="ts">
 import Vue from 'vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
-import Types from '@/components/Money/Types.vue';
+
 import Formitem from '@/components/Money/Formitem.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component} from 'vue-property-decorator';
+import Tabs from '@/components/Money/Tabs.vue';
+import recordtypelist from '@/constants/recordtypelist';
 @Component({
-  components: {Tags, Formitem, Types, NumberPad},
+  components: {Tabs, Tags, Formitem, NumberPad},
 })
 export default class Money extends Vue {
   get recordList() {
     return this.$store.state.recordList;
   }
+
+  recordtypelist = recordtypelist;
 
   // eslint-disable-next-line no-undef
   record: RecordItem = {
