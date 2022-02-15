@@ -1,6 +1,7 @@
 <template>
   <div>
     <label class="formItem">
+      <Icon name="label"/>
       <span class="name">{{this.fieldName}}</span>
       <input type="text"
              :value="value"
